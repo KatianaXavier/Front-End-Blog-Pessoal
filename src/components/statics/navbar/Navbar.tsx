@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["Home", "Postagens", "Temas", "Cadastrar Tema"];
+const pages = ["Home", "Postagens", "Temas", "Cadastrar Tema", "Logout"];
 const settings = ["Perfil", "Conta", "Dashboard", "Logout"];
 
 function Navbar() {
@@ -88,18 +88,21 @@ function Navbar() {
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  display: { xs: "flex", md: "none" },
                 }}
               >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
                 {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography style={{ color: "white" }} textAlign="center">
+                    <Typography style={{ color: "black", fontFamily:'Play' }} textAlign="center">
                       {page}
                     </Typography>
                   </MenuItem>
                 ))}
+                </Box>
               </Menu>
             </Box>
+            
             <Typography
               variant="h5"
               noWrap
@@ -111,9 +114,10 @@ function Navbar() {
                 flexGrow: 1,
                 fontWeight: 700,
                 letterSpacing: ".3rem",
-                color: "inherit",
+                color: "#EDB426",
                 textDecoration: "none",
               }}
+              style={{ fontFamily: 'Play'}}
             >
               Blog Pessoal
             </Typography>
@@ -137,12 +141,12 @@ function Navbar() {
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "left",
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "left",
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}

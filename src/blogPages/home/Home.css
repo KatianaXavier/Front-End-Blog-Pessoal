@@ -3,9 +3,8 @@
     text-align: center;
 }
 
-.imagem {
-    width: 500px;
-    height: 500px;
-    display: block;
+.imagemHome {
+    width: max(70%);
     margin: 0 auto;
+    display: block;
 }

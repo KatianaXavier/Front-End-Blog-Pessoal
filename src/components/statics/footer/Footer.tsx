@@ -14,7 +14,7 @@ function Footer() {
         alignItems="center"
       >
         <Grid alignItems="center" item xs={12}>
-          <Box style={{ backgroundColor: "#262729", height: "120px" }}>
+          <Box style={{ backgroundColor: "#262729", height: "95px" }}>
             <Box
               paddingTop={1}
               display="flex"
@@ -35,13 +35,13 @@ function Footer() {
                 href="https://github.com/KatianaXavier/"
                 target="_blank"
               >
-                <GitHubIcon style={{ fontSize: 50, color: "white" }} />
+                <GitHubIcon style={{ fontSize: 30, color: "white" }} />
               </a>
               <a
                 href="https://www.linkedin.com/in/katianaxavier/"
                 target="_blank"
               >
-                <LinkedInIcon style={{ fontSize: 50, color: "white" }} />
+                <LinkedInIcon style={{ fontSize: 30, color: "white" }} />
               </a>
             </Box>
           </Box>
@@ -57,14 +57,14 @@ function Footer() {
               </Typography>
             </Box>
             <Box>
-              <a target="_blank" href="https://github.com/Katianaxavier" style={{ textDecoration: "none" }}>
+              <a target="_blank" href="https://github.com/Katianaxavier" >
                 <Typography
                   variant="subtitle2"
                   gutterBottom
-                  style={{ color: "white", textDecoration: "none", fontFamily: 'Play' }}
+                  style={{ color: "white", fontFamily: 'Play' }}
                   align="center"
                 >
-                  Feito com 💛 por <a target="_blank" href="https://github.com/Katianaxavier" style={{ textDecoration: "none", color:"white" }}>Katiana Xavier</a>
+                  Feito com 💛 por <a target="_blank" href="https://github.com/Katianaxavier" style={{ color:"white" }}>Katiana Xavier</a>
                 </Typography>
               </a>
             </Box>

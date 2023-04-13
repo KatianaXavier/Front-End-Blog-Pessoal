@@ -52,11 +52,9 @@ function Home() {
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <img
-            src="/src/assets/images/hand-typing.svg"
+          <img className="imagem-home"
+            src="/src/assets/images/imagemHome.svg"
             alt="Mãos sobre o teclado de um laptop, com um caderno e lápis do lado direito e uma planta na parte superior esquerda"
-            width="500px"
-            height="500px"
           />
         </Grid>
         <Grid xs={12} style={{ backgroundColor: "white" }}></Grid>
