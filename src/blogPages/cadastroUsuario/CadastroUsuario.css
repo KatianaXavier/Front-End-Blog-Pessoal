@@ -1,0 +1,12 @@
+.imagemCadastro {
+    background-image: url('../../assets/images/imagemLogin.jpg');
+    width: 100vh;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.botaoCancelar {
+    margin-right: 20px;
+}

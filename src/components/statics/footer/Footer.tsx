@@ -1,4 +1,5 @@
 import React from "react";
+import './Footer.css'
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import { Box, Grid, Typography } from "@material-ui/core";
@@ -14,7 +15,7 @@ function Footer() {
         alignItems="center"
       >
         <Grid alignItems="center" item xs={12}>
-          <Box style={{ backgroundColor: "#262729", height: "95px" }}>
+          <Box className="caixa1">
             <Box
               paddingTop={1}
               display="flex"
@@ -25,7 +26,7 @@ function Footer() {
                 variant="h6"
                 align="center"
                 gutterBottom
-                style={{ color: "#0CABF7", fontFamily: 'Play' }}
+                className="textoRedes"
               >
                 Siga-nos nas redes sociais{" "}
               </Typography>
@@ -35,23 +36,23 @@ function Footer() {
                 href="https://github.com/KatianaXavier/"
                 target="_blank"
               >
-                <GitHubIcon style={{ fontSize: 30, color: "white" }} />
+                <GitHubIcon className="redes"/>
               </a>
               <a
                 href="https://www.linkedin.com/in/katianaxavier/"
                 target="_blank"
               >
-                <LinkedInIcon style={{ fontSize: 30, color: "white" }} />
+                <LinkedInIcon className="redes"/>
               </a>
             </Box>
           </Box>
-          <Box style={{ backgroundColor: "#565159", height: "60px" }}>
+          <Box className="caixa2">
             <Box paddingTop={1}>
               <Typography
                 variant="subtitle2"
                 align="center"
                 gutterBottom
-                style={{ color: "white", fontFamily: 'Play' }}
+                className="texto"
               >
                 © 2023 Copyright
               </Typography>
@@ -61,10 +62,10 @@ function Footer() {
                 <Typography
                   variant="subtitle2"
                   gutterBottom
-                  style={{ color: "white", fontFamily: 'Play' }}
                   align="center"
+                  className="texto"
                 >
-                  Feito com 💛 por <a target="_blank" href="https://github.com/Katianaxavier" style={{ color:"white" }}>Katiana Xavier</a>
+                  Feito com 💛 por <a target="_blank" href="https://github.com/Katianaxavier">Katiana Xavier</a>
                 </Typography>
               </a>
             </Box>

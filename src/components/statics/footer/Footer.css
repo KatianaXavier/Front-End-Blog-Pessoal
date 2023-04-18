@@ -1,0 +1,30 @@
+.caixa1 {
+    background: #262729;
+    height: "95px";
+}
+
+.caixa2 {
+    background-color: #565159;
+    height: 60px;
+
+}
+
+.textoRedes {
+    color: #0CABF7;
+}
+
+.redes {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.texto {
+    color: white;
+    text-decoration: none !important;
+
+}
+
+a {
+    color: white;
+}

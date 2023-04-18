@@ -1,10 +1,25 @@
-.titulo {
-    color: blueviolet;
-    text-align: center;
-}
-
 .imagemHome {
     width: max(70%);
     margin: 0 auto;
     display: block;
+}
+
+.caixaHome {
+    background-color: #BFC1C0;
+}
+
+.titulos {
+    color: #444545; 
+    font-weight: bold !important;
+}
+
+.botaoVerPostagens {
+    border-color: white !important;
+    background-color: #262729 !important;
+    color: #EDB426 !important;
+    font-weight: 500;
+}
+
+.caixaPostagens {
+    background-color: #BFC1C0;
 }

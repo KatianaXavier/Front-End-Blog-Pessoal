@@ -1,7 +1,26 @@
+.caixaLogin {
+    background-color: #BFC1C0;
+}
+
+.textos {
+    font-weight: bold !important;
+    text-align: center;
+    color: black;
+}
+
+.textos a {
+    color: inherit;
+}
+
+.textos a:hover {
+    color: #565159;
+}
+
 .imagemLogin {
     background-image: url('../../assets/images/imagemLogin.jpg');
+    width: 100vh;
     min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 }
-
