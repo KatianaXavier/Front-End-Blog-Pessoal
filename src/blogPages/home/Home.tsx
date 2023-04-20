@@ -1,15 +1,16 @@
 import "./Home.css";
-import React from 'react';
-import { Typography, Grid, Button } from '@material-ui/core';
+import React from "react";
+import { Typography, Grid, Button } from "@material-ui/core";
 import { Box } from "@mui/material";
-import ListaPostagens from '../../components/postagens/listaPostagens/ListaPostagens';
-import TabPostagens from "../../components/postagens/tabPostagens/TabPostagens";
+import ListaPostagens from "../../components/postagens/listaPostagem/ListaPostagem";
+import TabPostagens from "../../components/postagens/tabPostagem/TabPostagem";
 import { Link } from "react-router-dom";
 
 function Home() {
   return (
     <>
-      <Grid className="caixaHome"
+      <Grid
+        className="caixaHome"
         container
         direction="row"
         justifyContent="center"
@@ -38,20 +39,18 @@ function Home() {
               Expresse aqui os seus pensamentos e opiniões!
             </Typography>
           </Box>
-          <Box display="flex" justifyContent="center" >
+          <Box display="flex" justifyContent="center">
             <Box marginRight={1}></Box>
-            <Link to='/postagens'>
-              <Button
-                className="botaoVerPostagens"
-                variant="outlined"
-              >
+            <Link to="/postagens">
+              <Button className="botaoVerPostagens" variant="outlined">
                 Ver postagens
               </Button>
             </Link>
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <img className="imagem-home"
+          <img
+            className="imagem-home"
             src="/src/assets/images/imagemHome.svg"
             alt="Mãos sobre o teclado de um laptop, com um caderno e lápis do lado direito e uma planta na parte superior esquerda"
           />
@@ -64,4 +63,4 @@ function Home() {
   );
 }
 
-export default Home
+export default Home;
