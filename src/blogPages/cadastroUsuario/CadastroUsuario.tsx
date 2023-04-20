@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import "./CadastroUsuario.css";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import './CadastroUsuario.css';
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { cadastrarUsuario } from "../../services/Service";
-import User from "../../models/User";
+import { cadastrarUsuario } from '../../services/Service';
+import User from '../../models/User';
 
 function CadastroUsuario() {
 
@@ -42,7 +42,7 @@ function CadastroUsuario() {
 
     async function onSubmit(event: ChangeEvent<HTMLFormElement>) {
         event.preventDefault()
-        if (confirmarSenha == user.senha) {
+        if (confirmarSenha === user.senha) {
             try {
                 await cadastrarUsuario('/usuarios/cadastrar', user, setUserResult)
                 alert('Usuario cadastrado com sucesso.')
@@ -73,7 +73,7 @@ function CadastroUsuario() {
     }
 
     return (
-        <Grid container direction="row" justifyContent="center" alignItems="center">
+        <Grid container direction='row' justifyContent='center' alignItems='center'>
             <Grid item xs={6} className='imagemCadastro'></Grid>
             <Grid item xs={6} justifyContent='center' >
                 <Box display='flex' justifyContent={'center'} >
@@ -119,25 +119,25 @@ function CadastroUsuario() {
                                 value={confirmarSenha}
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => confirmarSenhaHandle(event)}
                                 variant='outlined'
-                                label='Confirmar Senha'
+                                label='Confirmar senha'
                                 margin='normal'
                                 fullWidth />
                             <Box marginY={2} display={'flex'} justifyContent={'space-around'} gap={4}>
-                                <Link to="/login">
-                                    <Button onClick={back} className="botaoCancelar"
-                                        size="large"
-                                        variant="contained"
-                                        color="error"
+                                <Link to='/login'>
+                                    <Button onClick={back} className='botaoCancelar'
+                                        size='large'
+                                        variant='contained'
+                                        color='error'
                                         fullWidth
                                     >
                                         Cancelar
                                     </Button>
                                 </Link>
                                 <Button
-                                    type="submit"
-                                    size="large"
-                                    variant="contained"
-                                    color="primary"
+                                    type='submit'
+                                    size='large'
+                                    variant='contained'
+                                    color='primary'
                                     fullWidth
                                 >
                                     Cadastrar

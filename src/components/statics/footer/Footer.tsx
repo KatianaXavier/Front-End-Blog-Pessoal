@@ -16,48 +16,21 @@ function Footer() {
       >
         <Grid alignItems="center" item xs={12}>
           <Box className="caixa1">
-            <Box
-              paddingTop={1}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography
-                variant="h6"
-                align="center"
-                gutterBottom
-                className="textoRedes"
-              >
-                Siga-nos nas redes sociais{" "}
-              </Typography>
-            </Box>
-            <Box display="flex" alignItems="center" justifyContent="center">
+            <Box display="flex" alignItems="center" justifyContent="center" paddingTop={2}>
               <a
                 href="https://github.com/KatianaXavier/"
                 target="_blank"
               >
-                <GitHubIcon className="redes"/>
+                <GitHubIcon className="redes" />
               </a>
               <a
                 href="https://www.linkedin.com/in/katianaxavier/"
                 target="_blank"
               >
-                <LinkedInIcon className="redes"/>
+                <LinkedInIcon className="redes" />
               </a>
             </Box>
-          </Box>
-          <Box className="caixa2">
-            <Box paddingTop={1}>
-              <Typography
-                variant="subtitle2"
-                align="center"
-                gutterBottom
-                className="texto"
-              >
-                © 2023 Copyright
-              </Typography>
-            </Box>
-            <Box>
+            <Box paddingBottom={1}>
               <a target="_blank" href="https://github.com/Katianaxavier" >
                 <Typography
                   variant="subtitle2"
@@ -65,7 +38,7 @@ function Footer() {
                   align="center"
                   className="texto"
                 >
-                  Feito com 💛 por <a target="_blank" href="https://github.com/Katianaxavier">Katiana Xavier</a>
+                  Feito com 💙 por <a target="_blank" href="https://github.com/Katianaxavier">Katiana Xavier</a>
                 </Typography>
               </a>
             </Box>

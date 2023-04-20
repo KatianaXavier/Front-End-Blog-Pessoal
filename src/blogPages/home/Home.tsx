@@ -1,6 +1,10 @@
-import React from "react";
 import "./Home.css";
-import { Box, Button, Grid, Typography } from "@material-ui/core";
+import React from 'react';
+import { Typography, Grid, Button } from '@material-ui/core';
+import { Box } from "@mui/material";
+import ListaPostagens from '../../components/postagens/listaPostagens/ListaPostagens';
+import TabPostagens from "../../components/postagens/tabPostagens/TabPostagens";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -35,13 +39,15 @@ function Home() {
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" >
-            <Box marginRight={1} ></Box>
-            <Button
-              className="botaoVerPostagens"
-              variant="outlined"
-            >
-              Ver postagens
-            </Button>
+            <Box marginRight={1}></Box>
+            <Link to='/postagens'>
+              <Button
+                className="botaoVerPostagens"
+                variant="outlined"
+              >
+                Ver postagens
+              </Button>
+            </Link>
           </Box>
         </Grid>
         <Grid item xs={6}>
@@ -50,10 +56,12 @@ function Home() {
             alt="Mãos sobre o teclado de um laptop, com um caderno e lápis do lado direito e uma planta na parte superior esquerda"
           />
         </Grid>
-        <Grid xs={12} className="caixaPostagens"></Grid>
+        <Grid xs={12} className="caixaPostagens">
+          <TabPostagens />
+        </Grid>
       </Grid>
     </>
   );
 }
 
-export default Home;
+export default Home

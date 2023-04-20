@@ -1,10 +1,10 @@
-import { Box, Button, Grid, TextField, Typography } from "@material-ui/core";
-import React, {ChangeEvent, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import useLocalStorage from "react-use-localstorage";
-import { login } from "../../services/Service";
-import "./Login.css";
-import UserLogin from "../../models/UserLogin";
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import useLocalStorage from 'react-use-localstorage';
+import { login } from '../../services/Service';
+import './Login.css';
+import UserLogin from '../../models/UserLogin';
 
 function Login() {
 
@@ -12,7 +12,7 @@ function Login() {
 
     const [token, setToken] = useLocalStorage('token')
 
-    const [userLogin, setUserLogin] = useState<UserLogin> (
+    const [userLogin, setUserLogin] = useState<UserLogin>(
         {
             id: 0,
             nome: '',
@@ -25,7 +25,7 @@ function Login() {
 
     function updatedModel(event: ChangeEvent<HTMLInputElement>) {
         setUserLogin({
-            ... userLogin,
+            ...userLogin,
             [event.target.name]: event.target.value
         })
     }
@@ -41,61 +41,67 @@ function Login() {
     }
 
     useEffect(() => {
-        if(token != '') {
+        if (token !== '') {
             history('/home')
         }
     }, [token])
 
     return (
         <>
-            <Grid className="caixaLogin" container alignItems={"center"}>
-                <Grid item xs={6} justifyContent="center">
-                    <Box display="flex" justifyContent="center">
+            <Grid className='caixaLogin' container alignItems={'center'}>
+                <Grid item xs={6} justifyContent='center'>
+                    <Box display='flex' justifyContent='center'>
                         <Grid item xs={6}>
                             <form onSubmit={onSubmit}>
                                 <Typography
-                                    variant="h4"
-                                    className="textos"
+                                    variant='h3'
+                                    className='textos'
                                     gutterBottom
                                 >
                                     Entrar
                                 </Typography>
-                                <TextField value={userLogin.usuario} onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
-                                    variant="outlined"
-                                    label="Usuário"
-                                    margin="normal"
+                                <TextField
+                                    variant='outlined'
+                                    name='usuario'
+                                    value={userLogin.usuario}
+                                    onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
+                                    label='Usuário'
+                                    margin='normal'
                                     fullWidth
                                 />
-                                <TextField value={userLogin.senha} onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
-                                    variant="outlined"
-                                    label="Senha"
-                                    type="password"
-                                    margin="normal"
+                                <TextField
+                                    variant='outlined'
+                                    name='senha'
+                                    value={userLogin.senha}
+                                    onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
+                                    label='Senha'
+                                    type='password'
+                                    margin='normal'
                                     fullWidth
                                 />
                                 <Box marginY={2}>
-                                        <Button
-                                            type="submit"
-                                            size="large"
-                                            variant="contained"
-                                            fullWidth
-                                        >
-                                            Entrar
-                                        </Button>
+                                    <Button
+                                        type='submit'
+                                        size='large'
+                                        variant='contained'
+                                        fullWidth
+                                    >
+                                        Entrar
+                                    </Button>
                                 </Box>
                             </form>
                             <hr />
                             <Box marginTop={2}></Box>
-                            <Typography variant="subtitle1" align="center">
+                            <Typography variant='subtitle1' align='center'>
                                 Ainda não tem uma conta?
                             </Typography>
-                            <Typography variant="subtitle1" gutterBottom className="textos"
-                            ><Link to='/cadastrousuario'>Cadastre-se aqui!</Link>
+                            <Typography variant='subtitle1' gutterBottom className='textos'
+                            ><Link to='/cadastro'>Cadastre-se aqui!</Link>
                             </Typography>
                         </Grid>
                     </Box>
                 </Grid>
-                <Grid item xs={6} className="imagemLogin"></Grid>
+                <Grid item xs={6} className='imagemLogin'></Grid>
             </Grid>
         </>
     );
