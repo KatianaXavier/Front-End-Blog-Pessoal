@@ -6,12 +6,11 @@ import { Tema } from '../../../models/Tema';
 import { getAll } from '../../../services/Service';
 import useLocalStorage from 'react-use-localstorage';
 
-function ListaTemas() {
+function ListaTema() {
 
     // criação da variável com useState
     const [temas, setTemas] = useState<Tema[]>([])
     const [token, setToken] = useLocalStorage('token')
-
     const history = useNavigate()
 
     // função que pega os temas
@@ -33,7 +32,6 @@ function ListaTemas() {
             history('/login')
         }
     }, [])
-    // }, [token]) ?
 
     return (
         <>
@@ -46,12 +44,12 @@ function ListaTemas() {
                                 <Typography variant="h5" component='h2'>{tema.descricao}</Typography>
                             </CardContent>
                             <CardActions>
-                                <Link to={`/atualizarTema/${tema.id}`}>
+                                <Link to={'/atualizarTema/${tema.id}'}>
                                     <Button variant="contained" size="small" color='primary'>
                                         Atualizar
                                     </Button>
                                 </Link>
-                                <Link to={`/deletarTema/${tema.id}`}>
+                                <Link to={'/deletarTema/${tema.id}'}>
                                     <Button variant="contained" size="small" color="secondary">
                                         Deletar
                                     </Button>
@@ -65,4 +63,4 @@ function ListaTemas() {
     );
 }
 
-export default ListaTemas;
+export default ListaTema;

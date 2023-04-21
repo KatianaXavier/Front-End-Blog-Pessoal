@@ -6,7 +6,7 @@ import useLocalStorage from 'react-use-localstorage'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAll } from '../../../services/Service'
 
-function ListaPostagens() {
+function ListaPostagem() {
 
     const [temas, setPostagens] = useState<Postagem[]>([])
     const [token, setToken] = useLocalStorage('token')
@@ -70,4 +70,4 @@ function ListaPostagens() {
     )
 }
 
-export default ListaPostagens
+export default ListaPostagem

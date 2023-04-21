@@ -8,7 +8,7 @@ import ListaPostagens from "../listaPostagem/ListaPostagem";
 import "./TabPostagens.css";
 
 function TabPostagens() {
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState('1');
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
