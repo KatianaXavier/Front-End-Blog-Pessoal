@@ -3,11 +3,20 @@ import './Footer.css'
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import { Box, Grid, Typography } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { TokenState } from "../../../store/tokens/tokensReducer";
 // footer eheader: # CE796B
 // atalho: rfce
 function Footer() {
-  return (
-    <>
+
+  const token = useSelector<TokenState, TokenState["token"]>(
+    (state) => state.token
+  )
+
+  var footerComponent
+
+  if (token != '') {
+    footerComponent =
       <Grid
         container
         direction="row"
@@ -45,6 +54,11 @@ function Footer() {
           </Box>
         </Grid>
       </Grid>
+  }
+
+  return (
+    <>
+      {footerComponent}
     </>
   );
 }

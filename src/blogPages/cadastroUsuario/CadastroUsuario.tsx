@@ -9,6 +9,7 @@ function CadastroUsuario() {
 
     const history = useNavigate();
 
+    // dados enviados ao backend
     const [user, setUser] = useState<User>(
         {
             id: 0,
@@ -18,6 +19,7 @@ function CadastroUsuario() {
             senha: ''
         })
 
+    // armazena o recebimento dos dados
     const [userResult, setUserResult] = useState<User>(
         {
             id: 0,
@@ -42,7 +44,7 @@ function CadastroUsuario() {
 
     async function onSubmit(event: ChangeEvent<HTMLFormElement>) {
         event.preventDefault()
-        if (confirmarSenha === user.senha) {
+        if (confirmarSenha === user.senha && user.senha.length > 8) {
             try {
                 await cadastrarUsuario('/usuarios/cadastrar', user, setUserResult)
                 alert('Usuario cadastrado com sucesso.')

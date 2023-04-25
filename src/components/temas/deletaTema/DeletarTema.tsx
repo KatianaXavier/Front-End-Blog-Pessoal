@@ -3,50 +3,57 @@ import { Card, CardActions, CardContent, Button, Typography } from '@material-ui
 import { Box } from '@mui/material';
 import { Tema } from '../../../models/Tema';
 import { useNavigate, useParams } from 'react-router-dom';
-import useLocalStorage from 'react-use-localstorage';
 import { deleteById, getById } from '../../../services/Service';
+import { useDispatch, useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { addToken } from '../../../store/tokens/actions';
 
 function DeletarTema() {
 
-        const { id } = useParams<{id: string}>()
-        const history = useNavigate()
-        const [token, setToken] = useLocalStorage('token')
-        const [tema, setTema] = useState<Tema>()
+    const dispatch = useDispatch();
 
-        useEffect(() => {
-            if (token === '') {
-                alert('É necessário fazer login.')
-                history('/login')
+    const { id } = useParams<{ id: string }>()
+    const history = useNavigate()
+    const token = useSelector<TokenState, TokenState["token"]>(
+        (state) => state.token
+    )
+    const [tema, setTema] = useState<Tema>()
+
+    useEffect(() => {
+        if (token === '') {
+            dispatch(addToken(token))
+            alert('É necessário fazer login.')
+            history('/login')
+        }
+    }, [])
+
+    async function findById(id: string) {
+        getById(`/temas/${id}`, setTema, {
+            headers: {
+                Authorization: token
             }
-        }, [])
-    
-        useEffect(() => {
-            if(id !== undefined) {
-                findById(id)
+        })
+    }
+
+    useEffect(() => {
+        if (id !== undefined) {
+            findById(id)
+        }
+    }, [id])
+
+    function sim() {
+        deleteById(`/tema/${id}`, {
+            headers: {
+                Authorization: token
             }
-        }, [id])
+        })
+        alert('Tema deletado com sucesso.')
+        history('/temas')
+    }
 
-        async function findById(id: string) {
-            getById('/temas/${id}', setTema, {
-                headers: {
-                    Authorization: token
-                }
-            })
-        }
-
-        function sim() {
-            history('/temas')
-            deleteById('/tema/${id}', {
-                headers: {
-                    Authorization: token
-                }
-            })
-            alert('Tema deletado com sucesso.')
-        }
-
-        function nao() {
-            history('/temas')
-        }
+    function nao() {
+        history('/temas')
+    }
 
     return (
         <>
@@ -54,12 +61,8 @@ function DeletarTema() {
                 <Card variant="outlined">
                     <CardContent>
                         <Box justifyContent="center">
-                            <Typography color="textSecondary" gutterBottom>
-                                Deseja deletar o tema
-                            </Typography>
-                            <Typography color="textSecondary">
-                                {tema?.descricao}
-                            </Typography>
+                            <Typography variant='h3' gutterBottom align='center'>Deletar tema</Typography>
+                            <Typography variant='body1' gutterBottom align='center'>Você tem certeza de que deseja deletar o tema: <br /> <strong>{tema?.descricao}</strong> </Typography>
                         </Box>
                     </CardContent>
                     <CardActions>

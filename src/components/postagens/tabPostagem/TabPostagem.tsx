@@ -5,7 +5,8 @@ import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 import ListaPostagens from "../listaPostagem/ListaPostagem";
-import "./TabPostagens.css";
+import "./TabPostagem.css";
+import { Typography } from "@mui/material";
 
 function TabPostagens() {
   const [value, setValue] = React.useState('1');
@@ -31,17 +32,13 @@ function TabPostagens() {
         <ListaPostagens />
       </TabPanel>
       <TabPanel value="2">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus
-        similique nulla neque deserunt sed repudiandae ea accusantium, dicta
-        nihil nisi nostrum ratione quod incidunt aspernatur delectus temporibus,
-        sit, expedita recusandae. Lorem ipsum dolor sit amet consectetur,
-        adipisicing elit. Necessitatibus similique nulla neque deserunt sed
-        repudiandae ea accusantium, dicta nihil nisi nostrum ratione quod
-        incidunt aspernatur delectus temporibus, sit, expedita recusandae. Lorem
-        ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus
-        similique nulla neque deserunt sed repudiandae ea accusantium, dicta
-        nihil nisi nostrum ratione quod incidunt aspernatur delectus temporibus,
-        sit, expedita recusandae.
+        <Typography variant="h6" component="h1" align="center">
+          Este é um projeto cujo back-end foi desenvolvido em Java com SpringBoot, incluindo banco de dados relacional. 
+          <br />
+          O front-end foi desenvolvido em React com Typescript e Material UI. 
+          <br />
+          Todo o projeto foi realizado durante o bootcamp FullStack Java, da Generation Brasil. 🧡
+        </Typography>
       </TabPanel>
     </TabContext>
   );

@@ -2,23 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { Typography, Button, Card, CardActions, CardContent } from "@material-ui/core"
 import { Box } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import useLocalStorage from 'react-use-localstorage';
 import { deleteById, getById } from '../../../services/Service';
 import { Postagem } from '../../../models/Postagem';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToken } from '../../../store/tokens/actions';
 
 function DeletarPostagem() {
 
+    const dispatch = useDispatch();
+
     const { id } = useParams<{id: string}>()
     const history = useNavigate()
-    const [token, setToken] = useLocalStorage('token')
+    const token = useSelector<TokenState, TokenState["token"]>(
+        (state) => state.token
+    )
     const [postagem, setPostagem] = useState<Postagem>()
 
     useEffect(() => {
         if (token === '') {
+            dispatch(addToken(token))
             alert('É necessário fazer login.')
             history('/login')
         }
-    }, [])
+    }, [token])
 
     useEffect(() => {
         if(id !== undefined) {
@@ -27,7 +34,7 @@ function DeletarPostagem() {
     }, [id])
 
     async function findById(id: string) {
-        getById('/postagens/${id}', setPostagem, {
+        getById(`/postagens/${id}`, setPostagem, {
             headers: {
                 Authorization: token
             }
@@ -36,7 +43,7 @@ function DeletarPostagem() {
 
     function sim() {
         history('/postagens')
-        deleteById('/postagem/${id}', {
+        deleteById(`/postagem/${id}`, {
             headers: {
                 Authorization: token
             }

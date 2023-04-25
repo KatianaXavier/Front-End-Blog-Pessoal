@@ -1,12 +1,31 @@
 import "./Home.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography, Grid, Button } from "@material-ui/core";
 import { Box } from "@mui/material";
-import ListaPostagens from "../../components/postagens/listaPostagem/ListaPostagem";
 import TabPostagens from "../../components/postagens/tabPostagem/TabPostagem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ModalPostagem from "../../components/postagens/modalPostagem/ModalPostagem";
+import { useDispatch, useSelector } from "react-redux";
+import { TokenState } from "../../store/tokens/tokensReducer";
+import { addToken } from "../../store/tokens/actions";
 
 function Home() {
+
+  const dispatch = useDispatch();
+
+  const history = useNavigate();
+  const token = useSelector<TokenState, TokenState["token"]>(
+    (state) => state.token
+  )
+
+  useEffect(() => {
+    if (token === "") {
+      dispatch(addToken(token))
+      alert('É necessário fazer login.')
+      history('/login')
+    }
+  }, [token])
+
   return (
     <>
       <Grid
@@ -40,17 +59,19 @@ function Home() {
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center">
-            <Box marginRight={1}></Box>
             <Link to="/postagens">
               <Button className="botaoVerPostagens" variant="outlined">
                 Ver postagens
               </Button>
             </Link>
+            <Box marginLeft={1}>
+              <ModalPostagem />
+            </Box>
           </Box>
         </Grid>
         <Grid item xs={6}>
           <img
-            className="imagem-home"
+            className="imagemHome"
             src="/src/assets/images/imagemHome.svg"
             alt="Mãos sobre o teclado de um laptop, com um caderno e lápis do lado direito e uma planta na parte superior esquerda"
           />

@@ -1,19 +1,37 @@
 import { Box, Card, CardContent, Typography, CardActions, Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import './ListaPostagens.css'
+import './ListaPostagem.css'
 import { Postagem } from '../../../models/Postagem'
-import useLocalStorage from 'react-use-localstorage'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAll } from '../../../services/Service'
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { useDispatch, useSelector } from 'react-redux'
+import { addToken } from '../../../store/tokens/actions'
 
 function ListaPostagem() {
 
-    const [temas, setPostagens] = useState<Postagem[]>([])
-    const [token, setToken] = useLocalStorage('token')
+    const dispatch = useDispatch();
+    
+    const token = useSelector<TokenState, TokenState["token"]>(
+        (state) => state.token
+    )
+
+    const [postagens, setPostagens] = useState<Postagem[]>([])
 
     const history = useNavigate()
 
-    // função que pega os temas
+    useEffect(() => {
+        if (token === '') {
+            dispatch(addToken(token))
+            alert('É necessário estar logado.')
+            history('/login')
+        }
+    }, [token])
+
+    useEffect(() => {
+        getAllPostagens()
+    }, [])
+
     async function getAllPostagens() {
         await getAll('/postagens', setPostagens, {
             headers: {
@@ -22,28 +40,17 @@ function ListaPostagem() {
         })
     }
 
-    useEffect(() => {
-        getAllPostagens()
-    }, [])
-
-    useEffect(() => {
-        if (token === '') {
-            alert('É necessário estar logado.')
-            history('/login')
-        }
-    }, [])
-
     return (
         <>
-            {temas.map((postagem) => (
+            {postagens.map((postagem) => (
                 <Box className='caixaListaPostagens'>
                     <Box m={4}>
                         <Card >
                             <CardContent>
-                                <Typography color='textSecondary' gutterBottom>
+                                <Typography variant='h6' color='textSecondary' gutterBottom>
                                     {postagem.titulo}
                                 </Typography>
-                                <Typography variant='h5' component='h2' gutterBottom>
+                                <Typography variant='h6' component='h2' gutterBottom>
                                     {postagem.texto}
                                 </Typography>
                                 <Typography gutterBottom component='p'>

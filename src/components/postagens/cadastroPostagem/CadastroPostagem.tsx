@@ -1,37 +1,45 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Container, Typography, TextField, Button, Select, InputLabel, MenuItem, FormControl, FormHelperText } from "@material-ui/core"
 import { useNavigate, useParams } from 'react-router-dom'
-import useLocalStorage from 'react-use-localstorage'
 import { Postagem } from '../../../models/Postagem'
 import { Tema } from '../../../models/Tema'
 import { getAll, getById, post, put } from '../../../services/Service'
+import { TokenState } from '../../../store/tokens/tokensReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToken } from '../../../store/tokens/actions'
 
 function CadastroPostagem() {
 
-    const { id } = useParams<{id: string}>()
+    const dispatch = useDispatch();
     const history = useNavigate()
-    const [token, setToken] = useLocalStorage('token')
+    const token = useSelector<TokenState, TokenState["token"]>(
+        (state) => state.token
+    )
+
+    const { id } = useParams<{ id: string }>()
     const [temas, setTemas] = useState<Tema[]>([])
 
-    useEffect(() => {
-        if (token === '') {
-            alert('É necessário fazer login.')
-            history('/login')
-        }
-    }, [])
-
-    const [tema, setTema] = useState<Tema> (
+    const [tema, setTema] = useState<Tema>(
         {
             id: 0,
             descricao: ''
         })
 
-    const [postagem, setPostagem] = useState<Postagem> ({
+    const [postagem, setPostagem] = useState<Postagem>({
         id: 0,
         titulo: '',
         texto: '',
-        tema: null
+        data: '',
+        tema: null,
     })
+
+    useEffect(() => {
+        if (token === '') {
+            dispatch(addToken(token))
+            alert('É necessário fazer login.')
+            history('/login')
+        }
+    }, [token])
 
     useEffect(() => {
         setPostagem({
@@ -41,24 +49,24 @@ function CadastroPostagem() {
     }, [tema])
 
     useEffect(() => {
-        getTemas()
+        getAllTemas()
         if (id !== undefined) {
             findByIdPostagem(id)
         }
     }, [id])
 
-    async function getTemas() {
-        await getAll("/tema", setTemas, {
+    async function getAllTemas() {
+        await getAll("/temas", setTemas, {
             headers: {
-                'Authorization': token
+                Authorization: token
             }
         })
     }
 
     async function findByIdPostagem(id: string) {
-        await getById('postagens/${id}', setPostagem, {
+        await getById(`postagens/${id}`, setPostagem, {
             headers: {
-                'Authorization': token
+                Authorization: token
             }
         })
     }
@@ -71,52 +79,94 @@ function CadastroPostagem() {
         })
     }
 
-    async function onSubmit(event: ChangeEvent<HTMLFormElement>) {
-        event.preventDefault()
-        if (id !== undefined) {
-            put('/postagens', postagem, setPostagem, {
-                headers: {
-                    'Authorization': token
-                }
-            })
-            alert('Postagem atualizada com sucesso.');
-        } else {
-            post('/postagens', postagem, setPostagem, {
-                headers: {
-                    'Authorization': token
-                }
-            })
-            alert('Postagem cadastrada com sucesso.');
-        }
-        back()
-    }
-
     function back() {
         history('/postagens')
     }
 
-    return (
-        <Container maxWidth="sm">
-            <form >
-                <Typography variant="h3" color="textSecondary" component="h1" align="center" >Formulário de cadastro postagem</Typography>
-                <TextField id="titulo" label="titulo" variant="outlined" name="titulo" margin="normal" fullWidth />
-                <TextField id="texto" label="texto" name="texto" variant="outlined" margin="normal" fullWidth />
+    async function onSubmit(event: ChangeEvent<HTMLFormElement>) {
+        event.preventDefault()
 
-                <FormControl >
-                    <InputLabel id="demo-simple-select-helper-label">Tema </InputLabel>
-                    <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper">
-                    </Select>
-                    <FormHelperText>Escolha um tema para a postagem</FormHelperText>
-                    <Button type="submit" variant="contained" color="primary">
-                        Finalizar
+        if (id !== undefined) {
+            try {
+                await put('/postagens', postagem, setPostagem, {
+                    headers: {
+                        Authorization: token,
+                    },
+                });
+                alert('Postagem atualizada com sucesso.');
+                history('/postagens')
+            } catch (error) {
+                alert('Falha ao atualizar a postagem.');
+            }
+        } else {
+            try {
+                await post('/postagens', postagem, setPostagem, {
+                    headers: {
+                        Authorization: token,
+                    },
+                });
+                alert('Postagem cadastrada com sucesso.');
+                history('/postagens')
+            } catch (error) {
+                alert('Falha ao cadastrar a postagem.');
+            }
+            back()
+        }
+    }
+
+    return (
+        <>
+            <Container maxWidth="sm">
+                <form onSubmit={onSubmit} >
+                    <Typography variant="h4" align="center">
+                        {postagem.id == 0 ? "Cadastre" : "Atualize"} sua postagem
+                    </Typography>
+                    <TextField
+                        value={postagem.titulo}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => updatedPostagem(event)}
+                        id="titulo"
+                        label="Título"
+                        variant="outlined"
+                        name="titulo"
+                        margin="normal"
+                        fullWidth
+                    />
+                    <TextField
+                        value={postagem.texto}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => updatedPostagem(event)}
+                        id="texto"
+                        label="Conteúdo da postagem"
+                        name="texto"
+                        variant="outlined"
+                        multiline
+                        minRows={5}
+                        fullWidth
+                    />
+                    <FormControl>
+                        <InputLabel>Tema</InputLabel>
+                        <Select
+                            variant="standard"
+                            onChange={(event) => getById(`/temas/${event.target.value}`, setTema, {
+                                headers: {
+                                    'Authorization': token
+                                }
+                            })}>
+                            {
+                                temas.map((tema) => (
+                                    <MenuItem value={tema.id}>{tema.descricao}</MenuItem>
+                                ))
+                            }
+                        </Select>
+                        <FormHelperText>Escolha um tema para a postagem</FormHelperText>
+                    </FormControl>
+                    <Button type="submit" variant="contained" color="primary" disabled={tema.id === 0}>
+                        {tema.id === 0 ? 'selecione um tema' : 'postar'}
                     </Button>
-                </FormControl>
-            </form>
-        </Container>
+
+                </form>
+            </Container >
+        </>
     )
 }
-export default CadastroPostagem;
 
-// 9:00
+export default CadastroPostagem

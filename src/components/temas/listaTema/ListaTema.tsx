@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom';
-import './ListaTemas.css'
+import './ListaTema.css'
 import { Tema } from '../../../models/Tema';
 import { getAll } from '../../../services/Service';
-import useLocalStorage from 'react-use-localstorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { addToken } from '../../../store/tokens/actions';
 
 function ListaTema() {
+    const dispatch = useDispatch();
 
     // criação da variável com useState
     const [temas, setTemas] = useState<Tema[]>([])
-    const [token, setToken] = useLocalStorage('token')
+    const token = useSelector<TokenState, TokenState["token"]>(
+        (state) => state.token
+    )
     const history = useNavigate()
 
     // função que pega os temas
@@ -28,6 +33,7 @@ function ListaTema() {
 
     useEffect(() => {
         if (token === '') {
+            dispatch(addToken(token))
             alert('É necessário estar logado.')
             history('/login')
         }
@@ -44,12 +50,12 @@ function ListaTema() {
                                 <Typography variant="h5" component='h2'>{tema.descricao}</Typography>
                             </CardContent>
                             <CardActions>
-                                <Link to={'/atualizarTema/${tema.id}'}>
+                                <Link to={`/atualizarTema/${tema.id}`}>
                                     <Button variant="contained" size="small" color='primary'>
                                         Atualizar
                                     </Button>
                                 </Link>
-                                <Link to={'/deletarTema/${tema.id}'}>
+                                <Link to={`/deletarTema/${tema.id}`}>
                                     <Button variant="contained" size="small" color="secondary">
                                         Deletar
                                     </Button>
