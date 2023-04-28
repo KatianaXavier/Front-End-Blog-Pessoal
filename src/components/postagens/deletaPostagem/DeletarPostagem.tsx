@@ -5,41 +5,51 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { deleteById, getById } from '../../../services/Service';
 import { Postagem } from '../../../models/Postagem';
 import { TokenState } from '../../../store/tokens/tokensReducer';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToken } from '../../../store/tokens/actions';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function DeletarPostagem() {
 
-    const dispatch = useDispatch();
-
-    const { id } = useParams<{id: string}>()
     const history = useNavigate()
+
     const token = useSelector<TokenState, TokenState["token"]>(
         (state) => state.token
     )
+
+    const { id } = useParams<{ id: string }>()
+
     const [postagem, setPostagem] = useState<Postagem>()
 
     useEffect(() => {
         if (token === '') {
-            dispatch(addToken(token))
-            alert('É necessário fazer login.')
-            history('/login')
+            toast.error('É necessário fazer login.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            history("/login")
         }
     }, [token])
 
-    useEffect(() => {
-        if(id !== undefined) {
-            findById(id)
-        }
-    }, [id])
-
     async function findById(id: string) {
-        getById(`/postagens/${id}`, setPostagem, {
+        await getById(`/postagens/${id}`, setPostagem, {
             headers: {
                 Authorization: token
             }
         })
     }
+
+    useEffect(() => {
+        if (id !== undefined) {
+            findById(id)
+        }
+    }, [id])
+
 
     function sim() {
         history('/postagens')
@@ -48,7 +58,16 @@ function DeletarPostagem() {
                 Authorization: token
             }
         })
-        alert('Postagem deletada com sucesso.')
+        toast.success('Postagem deletada com sucesso.', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
     }
 
     function nao() {

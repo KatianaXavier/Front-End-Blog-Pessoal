@@ -1,9 +1,11 @@
 import { Tema } from "./Tema"
+import { User } from "./User";
 
 export interface Postagem {
     id: number
-    titulo: string
-    texto: string
-    data: string
-    tema?: Tema | null
+    titulo: string;
+    texto: string;
+    data: string;
+    tema?: Tema | null;
+    usuario?: User | null;
 }

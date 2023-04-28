@@ -4,30 +4,29 @@ import { Box } from '@mui/material';
 import { Tema } from '../../../models/Tema';
 import { useNavigate, useParams } from 'react-router-dom';
 import { deleteById, getById } from '../../../services/Service';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
-import { addToken } from '../../../store/tokens/actions';
 
 function DeletarTema() {
 
-    const dispatch = useDispatch();
-
-    const { id } = useParams<{ id: string }>()
     const history = useNavigate()
+
     const token = useSelector<TokenState, TokenState["token"]>(
         (state) => state.token
     )
+
+    const { id } = useParams<{ id: string }>()
+    
     const [tema, setTema] = useState<Tema>()
 
     useEffect(() => {
         if (token === '') {
-            dispatch(addToken(token))
             alert('É necessário fazer login.')
             history('/login')
         }
     }, [])
 
-    async function findById(id: string) {
+    async function getTemaById(id: string) {
         getById(`/temas/${id}`, setTema, {
             headers: {
                 Authorization: token
@@ -37,9 +36,9 @@ function DeletarTema() {
 
     useEffect(() => {
         if (id !== undefined) {
-            findById(id)
+            getTemaById(id)
         }
-    }, [id])
+    })
 
     function sim() {
         deleteById(`/tema/${id}`, {

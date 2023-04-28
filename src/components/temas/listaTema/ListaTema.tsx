@@ -4,18 +4,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import './ListaTema.css'
 import { Tema } from '../../../models/Tema';
 import { getAll } from '../../../services/Service';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
 import { addToken } from '../../../store/tokens/actions';
 
 function ListaTema() {
-    const dispatch = useDispatch();
 
     // criação da variável com useState
     const [temas, setTemas] = useState<Tema[]>([])
+
     const token = useSelector<TokenState, TokenState["token"]>(
         (state) => state.token
     )
+
     const history = useNavigate()
 
     // função que pega os temas
@@ -29,22 +30,27 @@ function ListaTema() {
 
     useEffect(() => {
         getAllTemas()
-    }, [])
+    }, [temas.length])
 
     useEffect(() => {
         if (token === '') {
-            dispatch(addToken(token))
             alert('É necessário estar logado.')
             history('/login')
         }
-    }, [])
+    }, [token])
 
     return (
         <>
-            {temas.map((tema) => (
-                <Box className='caixaListaTemas'>
+            {temas.length === 0 && (
+                <div className="loaderContainer">
+                    <span className="loader"></span>
+                </div>
+            )}
+
+            <Box className='caixaListaTemas'>
+                {temas.map((tema) => (
                     <Box m={4}>
-                        <Card>
+                        <Card variant="outlined" className="cardTema">
                             <CardContent>
                                 <Typography color='textSecondary' gutterBottom>Tema:</Typography>
                                 <Typography variant="h5" component='h2'>{tema.descricao}</Typography>
@@ -63,8 +69,8 @@ function ListaTema() {
                             </CardActions>
                         </Card>
                     </Box>
+                    ))}
                 </Box>
-            ))}
         </>
     );
 }

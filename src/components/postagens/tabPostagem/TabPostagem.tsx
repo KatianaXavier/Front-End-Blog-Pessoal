@@ -6,7 +6,7 @@ import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 import ListaPostagens from "../listaPostagem/ListaPostagem";
 import "./TabPostagem.css";
-import { Typography } from "@mui/material";
+import { Carousel } from "../../carrossel/Carrossel";
 
 function TabPostagens() {
   const [value, setValue] = React.useState('1');
@@ -32,13 +32,7 @@ function TabPostagens() {
         <ListaPostagens />
       </TabPanel>
       <TabPanel value="2">
-        <Typography variant="h6" component="h1" align="center">
-          Este é um projeto cujo back-end foi desenvolvido em Java com SpringBoot, incluindo banco de dados relacional. 
-          <br />
-          O front-end foi desenvolvido em React com Typescript e Material UI. 
-          <br />
-          Todo o projeto foi realizado durante o bootcamp FullStack Java, da Generation Brasil. 🧡
-        </Typography>
+        <Carousel />
       </TabPanel>
     </TabContext>
   );

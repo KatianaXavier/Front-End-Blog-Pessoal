@@ -4,12 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Tema } from '../../../models/Tema'
 import { getById, post, put } from '../../../services/Service'
 import { TokenState } from '../../../store/tokens/tokensReducer'
-import { useDispatch, useSelector } from 'react-redux'
-import { addToken } from '../../../store/tokens/actions'
+import { useSelector } from 'react-redux'
 
 function CadastroTema() {
 
-    const dispatch = useDispatch();
     const history = useNavigate()
 
     const token = useSelector<TokenState, TokenState["token"]>(
@@ -46,7 +44,6 @@ function CadastroTema() {
 
     useEffect(() => {
         if (token === '') {
-            dispatch(addToken(token))
             alert('É necessário fazer login.')
             history('/login')
         }

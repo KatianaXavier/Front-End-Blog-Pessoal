@@ -4,6 +4,7 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { cadastrarUsuario } from '../../services/Service';
 import { User } from '../../models/User';
+import { toast } from 'react-toastify';
 
 function CadastroUsuario() {
 
@@ -47,12 +48,39 @@ function CadastroUsuario() {
         if (confirmarSenha === user.senha && user.senha.length > 8) {
             try {
                 await cadastrarUsuario('/usuarios/cadastrar', user, setUserResult)
-                alert('Usuario cadastrado com sucesso.')
+                toast.success('Usuário cadastrado com sucesso.', {
+                    position: "top-right",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    });
             } catch (error) {
-                alert('Dados inconsistentes; por favor verifique as informações de cadastro.')
+                toast.error('Por favor, verifique os campos.', {
+                    position: "top-right",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    });
             }
         } else {
-            alert('As senhas não coincidem.')
+            toast.error('As senhas não coincidem.', {
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
             setConfirmarSenha('')
             setUser({
                 ...user,
@@ -61,8 +89,8 @@ function CadastroUsuario() {
         }
     }
 
-    useEffect(() => {
-    }, [user.nome])
+    // useEffect(() => {
+    // }, [user.nome])
 
     useEffect(() => {
         if (userResult.id !== 0) {

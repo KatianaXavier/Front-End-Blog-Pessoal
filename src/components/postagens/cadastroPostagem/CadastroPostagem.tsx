@@ -7,16 +7,19 @@ import { getAll, getById, post, put } from '../../../services/Service'
 import { TokenState } from '../../../store/tokens/tokensReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToken } from '../../../store/tokens/actions'
+import { toast } from 'react-toastify'
+import { User } from '../../../models/User'
 
 function CadastroPostagem() {
 
-    const dispatch = useDispatch();
     const history = useNavigate()
+
     const token = useSelector<TokenState, TokenState["token"]>(
         (state) => state.token
     )
 
     const { id } = useParams<{ id: string }>()
+
     const [temas, setTemas] = useState<Tema[]>([])
 
     const [tema, setTema] = useState<Tema>(
@@ -31,12 +34,29 @@ function CadastroPostagem() {
         texto: '',
         data: '',
         tema: null,
+        usuario: null
     })
+
+    const [usuario, setUsuario] = useState<User>({
+        id: 0,
+        nome: "",
+        usuario: "",
+        senha: "",
+        foto: "",
+    });
 
     useEffect(() => {
         if (token === '') {
-            dispatch(addToken(token))
-            alert('É necessário fazer login.')
+            toast.error('É necessário fazer login', {
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
             history('/login')
         }
     }, [token])
@@ -93,8 +113,16 @@ function CadastroPostagem() {
                         Authorization: token,
                     },
                 });
-                alert('Postagem atualizada com sucesso.');
-                history('/postagens')
+                toast.success('Postagem atualizada com sucesso.', {
+                    position: "top-right",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    });
             } catch (error) {
                 alert('Falha ao atualizar a postagem.');
             }
@@ -105,8 +133,16 @@ function CadastroPostagem() {
                         Authorization: token,
                     },
                 });
-                alert('Postagem cadastrada com sucesso.');
-                history('/postagens')
+                toast.success('Postagem cadastrada com sucesso.', {
+                    position: "top-right",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    });
             } catch (error) {
                 alert('Falha ao cadastrar a postagem.');
             }
@@ -160,9 +196,8 @@ function CadastroPostagem() {
                         <FormHelperText>Escolha um tema para a postagem</FormHelperText>
                     </FormControl>
                     <Button type="submit" variant="contained" color="primary" disabled={tema.id === 0}>
-                        {tema.id === 0 ? 'selecione um tema' : 'postar'}
+                        {tema.id === 0 ? 'Selecione um tema' : 'Postar'}
                     </Button>
-
                 </form>
             </Container >
         </>

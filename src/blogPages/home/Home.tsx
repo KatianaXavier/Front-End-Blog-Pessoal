@@ -7,24 +7,33 @@ import { Link, useNavigate } from "react-router-dom";
 import ModalPostagem from "../../components/postagens/modalPostagem/ModalPostagem";
 import { useDispatch, useSelector } from "react-redux";
 import { TokenState } from "../../store/tokens/tokensReducer";
-import { addToken } from "../../store/tokens/actions";
+import { toast } from "react-toastify";
 
 function Home() {
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const history = useNavigate();
-  const token = useSelector<TokenState, TokenState["token"]>(
-    (state) => state.token
-  )
 
-  useEffect(() => {
-    if (token === "") {
-      dispatch(addToken(token))
-      alert('É necessário fazer login.')
-      history('/login')
-    }
-  }, [token])
+  // const token = useSelector<TokenState, TokenState["token"]>(
+  //   (state) => state.token
+  // )
+
+  // useEffect(() => {
+  //   if (token === "") {
+  //     toast.error('É necessário fazer login.', {
+  //       position: "top-right",
+  //       autoClose: 2500,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "colored",
+  //       });
+  //     history("/login")
+  //   }
+  // }, [token])
 
   return (
     <>

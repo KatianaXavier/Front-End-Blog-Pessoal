@@ -3,9 +3,11 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../services/Service";
 import "./Login.css";
-import UserLogin from "../../models/UserLogin";
 import { useDispatch } from "react-redux";
-import { addToken } from "../../store/tokens/actions";
+import { addId, addToken } from "../../store/tokens/actions";
+import { toast } from "react-toastify";
+import UserLogin from "../../models/UserLogin";
+import useLocalStorage from 'react-use-localstorage'
 
 function Login() {
 
@@ -13,9 +15,9 @@ function Login() {
 
     const dispatch = useDispatch();
 
-    const [token, setToken] = useState("");
+    const [token, setToken] = useState('')
 
-    const [isLoading, setIsLoading] = useState(false) 
+    const [isLoading, setIsLoading] = useState(false)
 
     const [userLogin, setUserLogin] = useState<UserLogin>({
         id: 0,
@@ -26,6 +28,15 @@ function Login() {
         token: "",
     });
 
+    const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
+        id: 0,
+        nome: '',
+        usuario: '',
+        foto: '',
+        senha: '',
+        token: ''
+    })
+
     function updatedModel(event: ChangeEvent<HTMLInputElement>) {
         setUserLogin({
             ...userLogin,
@@ -33,24 +44,58 @@ function Login() {
         });
     }
 
+    // useEffect(() => {
+    //     if (token !== "") {
+    //         dispatch(addToken(token));
+    //         history("/home");
+    //     }
+    // }, [token]);
+
     async function onSubmit(event: ChangeEvent<HTMLFormElement>) {
-        event.preventDefault();
+        event.preventDefault()
         try {
             setIsLoading(true)
-            await login("/usuarios/logar", userLogin, setToken);
-            alert("Usuário logado com sucesso!");
+            await login("/usuarios/logar", userLogin, setRespUserLogin)
+            toast.success('Login feito com sucesso.', {
+                position: "top-center",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         } catch (error) {
             setIsLoading(false)
-            alert("Dados inconsistentes; erro ao logar.");
+            console.log(error)
+            toast.error('Erro ao logar.', {
+                position: "top-center",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
     }
 
+    // useEffect(() => {
+    //     if (token !== "") {
+    //         dispatch(addToken(token));
+    //         history("/home");
+    //     }
+    // }, [token]);
+
     useEffect(() => {
-        if (token !== "") {
-            dispatch(addToken(token));
-            history("/home");
+        if (respUserLogin.token !== '') {
+            dispatch(addToken(respUserLogin.token))
+            dispatch(addId(respUserLogin.id.toString()))
+            history('/home')
         }
-    }, [token]);
+    }, [respUserLogin.token])
 
     return (
         <>
@@ -75,7 +120,7 @@ function Login() {
                                 />
                                 <TextField
                                     error={userLogin.senha.length < 8 && userLogin.senha.length > 0}
-                                    helperText={userLogin.senha.length < 8 && userLogin.senha.length > 0 ? 'Senha incorreta' : ''}              
+                                    helperText={userLogin.senha.length < 8 && userLogin.senha.length > 0 ? 'Senha incorreta' : ''}
                                     variant="outlined"
                                     name="senha"
                                     value={userLogin.senha}
@@ -88,7 +133,7 @@ function Login() {
                                     fullWidth
                                 />
                                 <Box marginY={2}>
-                                    <Button
+                                    <Button className="loaderLogin"
                                         disabled={isLoading}
                                         type="submit"
                                         size="large"
@@ -113,7 +158,7 @@ function Login() {
                 <Grid item xs={6} className="imagemLogin"></Grid>
             </Grid>
         </>
-    );
+    )
 }
 
 export default Login;
