@@ -58,6 +58,7 @@ function CadastroUsuario() {
                     progress: undefined,
                     theme: "colored",
                     });
+                    history('/home')
             } catch (error) {
                 toast.error('Por favor, verifique os campos.', {
                     position: "top-right",

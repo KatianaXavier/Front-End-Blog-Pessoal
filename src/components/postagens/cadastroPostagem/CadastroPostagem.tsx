@@ -1,14 +1,23 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Container, Typography, TextField, Button, Select, InputLabel, MenuItem, FormControl, FormHelperText } from "@material-ui/core"
-import { useNavigate, useParams } from 'react-router-dom'
-import { Postagem } from '../../../models/Postagem'
-import { Tema } from '../../../models/Tema'
-import { getAll, getById, post, put } from '../../../services/Service'
-import { TokenState } from '../../../store/tokens/tokensReducer'
-import { useDispatch, useSelector } from 'react-redux'
-import { addToken } from '../../../store/tokens/actions'
-import { toast } from 'react-toastify'
-import { User } from '../../../models/User'
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import {
+    Button,
+    Container,
+    Typography,
+    TextField,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    FormHelperText,
+} from '@mui/material';
+import { Postagem } from '../../../models/Postagem';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Tema } from '../../../models/Tema';
+import { getAll, getById, put, post } from '../../../services/Service';
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { User } from '../../../models/User';
+import { toast } from 'react-toastify';
 
 function CadastroPostagem() {
 
@@ -16,6 +25,10 @@ function CadastroPostagem() {
 
     const token = useSelector<TokenState, TokenState["token"]>(
         (state) => state.token
+    )
+
+    const userId = useSelector<TokenState, TokenState["id"]>(
+        (state) => state.id
     )
 
     const { id } = useParams<{ id: string }>()
@@ -38,17 +51,17 @@ function CadastroPostagem() {
     })
 
     const [usuario, setUsuario] = useState<User>({
-        id: 0,
-        nome: "",
-        usuario: "",
-        senha: "",
-        foto: "",
-    });
+        id: +userId,
+        nome: '',
+        usuario: '',
+        foto: '',
+        senha: ''
+    })
 
     useEffect(() => {
         if (token === '') {
             toast.error('É necessário fazer login', {
-                position: "top-right",
+                position: "top-center",
                 autoClose: 2500,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -56,7 +69,7 @@ function CadastroPostagem() {
                 draggable: true,
                 progress: undefined,
                 theme: "colored",
-                });
+            });
             history('/login')
         }
     }, [token])
@@ -64,7 +77,8 @@ function CadastroPostagem() {
     useEffect(() => {
         setPostagem({
             ...postagem,
-            tema: tema
+            tema: tema,
+            usuario: usuario
         })
     }, [tema])
 
@@ -114,7 +128,7 @@ function CadastroPostagem() {
                     },
                 });
                 toast.success('Postagem atualizada com sucesso.', {
-                    position: "top-right",
+                    position: "top-center",
                     autoClose: 2500,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -122,9 +136,19 @@ function CadastroPostagem() {
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    });
+                });
+                history('/postagens')
             } catch (error) {
-                alert('Falha ao atualizar a postagem.');
+                toast.error('Falha ao atualizar a postagem.', {
+                    position: "top-center",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
         } else {
             try {
@@ -134,7 +158,7 @@ function CadastroPostagem() {
                     },
                 });
                 toast.success('Postagem cadastrada com sucesso.', {
-                    position: "top-right",
+                    position: "top-center",
                     autoClose: 2500,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -142,9 +166,19 @@ function CadastroPostagem() {
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    });
+                });
+                history('/postagens')
             } catch (error) {
-                alert('Falha ao cadastrar a postagem.');
+                toast.error('Falha ao cadastrar a postagem.', {
+                    position: "top-center",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
             back()
         }
@@ -189,7 +223,7 @@ function CadastroPostagem() {
                             })}>
                             {
                                 temas.map((tema) => (
-                                    <MenuItem value={tema.id}>{tema.descricao}</MenuItem>
+                                    <MenuItem key={tema.id} value={tema.id}>{tema.descricao} <br/></MenuItem> 
                                 ))
                             }
                         </Select>

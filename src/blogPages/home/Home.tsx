@@ -3,17 +3,21 @@ import React, { useEffect } from "react";
 import { Typography, Grid, Button } from "@material-ui/core";
 import { Box } from "@mui/material";
 import TabPostagens from "../../components/postagens/tabPostagem/TabPostagem";
-import { Link, useNavigate } from "react-router-dom";
+import ListaPostagem from "../../components/postagens/listaPostagem/ListaPostagem";
 import ModalPostagem from "../../components/postagens/modalPostagem/ModalPostagem";
-import { useDispatch, useSelector } from "react-redux";
-import { TokenState } from "../../store/tokens/tokensReducer";
-import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
 
+  const history = useNavigate()
+
+  function postar() {
+    history('/cadastroPostagem')
+  }
+
   // const dispatch = useDispatch();
 
-  const history = useNavigate();
+  // const history = useNavigate();
 
   // const token = useSelector<TokenState, TokenState["token"]>(
   //   (state) => state.token
@@ -68,8 +72,11 @@ function Home() {
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center">
+            <Box marginRight={1} display={'flex'} flexDirection={'column'} gap={1}></Box>
             <Link to="/postagens">
-              <Button className="botaoVerPostagens" variant="outlined">
+              <Button
+                className="botaoVerPostagens"
+                variant="outlined">
                 Ver postagens
               </Button>
             </Link>
@@ -88,9 +95,10 @@ function Home() {
         <Grid xs={12} className="caixaPostagens">
           <TabPostagens />
         </Grid>
-      </Grid>
+      </Grid >
     </>
   );
 }
+
 
 export default Home;

@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../services/Service";
 import "./Login.css";
@@ -7,13 +7,12 @@ import { useDispatch } from "react-redux";
 import { addId, addToken } from "../../store/tokens/actions";
 import { toast } from "react-toastify";
 import UserLogin from "../../models/UserLogin";
-import useLocalStorage from 'react-use-localstorage'
 
 function Login() {
 
-    const history = useNavigate();
+    const history = useNavigate()
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const [token, setToken] = useState('')
 
@@ -21,11 +20,11 @@ function Login() {
 
     const [userLogin, setUserLogin] = useState<UserLogin>({
         id: 0,
-        nome: "",
-        usuario: "",
-        foto: "",
-        senha: "",
-        token: "",
+        nome: '',
+        usuario: '',
+        foto: '',
+        senha: '',
+        token: ''
     });
 
     const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
@@ -40,23 +39,16 @@ function Login() {
     function updatedModel(event: ChangeEvent<HTMLInputElement>) {
         setUserLogin({
             ...userLogin,
-            [event.target.name]: event.target.value,
+            [event.target.name]: event.target.value
         });
     }
-
-    // useEffect(() => {
-    //     if (token !== "") {
-    //         dispatch(addToken(token));
-    //         history("/home");
-    //     }
-    // }, [token]);
 
     async function onSubmit(event: ChangeEvent<HTMLFormElement>) {
         event.preventDefault()
         try {
             setIsLoading(true)
-            await login("/usuarios/logar", userLogin, setRespUserLogin)
-            toast.success('Login feito com sucesso.', {
+            await login('/usuarios/logar', userLogin, setRespUserLogin)
+            toast.success('Login feito com sucesso. 🥳', {
                 position: "top-center",
                 autoClose: 2500,
                 hideProgressBar: false,
@@ -64,8 +56,8 @@ function Login() {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",
-            });
+                theme: "colored"
+            })
         } catch (error) {
             setIsLoading(false)
             console.log(error)
@@ -77,20 +69,14 @@ function Login() {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",
-            });
+                theme: "colored"
+            })
         }
     }
 
-    // useEffect(() => {
-    //     if (token !== "") {
-    //         dispatch(addToken(token));
-    //         history("/home");
-    //     }
-    // }, [token]);
-
     useEffect(() => {
         if (respUserLogin.token !== '') {
+            console.log(respUserLogin)
             dispatch(addToken(respUserLogin.token))
             dispatch(addId(respUserLogin.id.toString()))
             history('/home')
@@ -111,22 +97,18 @@ function Login() {
                                     variant="outlined"
                                     name="usuario"
                                     value={userLogin.usuario}
-                                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                                        updatedModel(event)
-                                    }
+                                    onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
                                     label="Usuário"
                                     margin="normal"
                                     fullWidth
                                 />
                                 <TextField
                                     error={userLogin.senha.length < 8 && userLogin.senha.length > 0}
-                                    helperText={userLogin.senha.length < 8 && userLogin.senha.length > 0 ? 'Senha incorreta' : ''}
+                                    helperText={userLogin.senha.length < 8 && userLogin.senha.length > 0 ? 'A senha deve ter mais de 8 caracteres' : ''}
                                     variant="outlined"
                                     name="senha"
                                     value={userLogin.senha}
-                                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                                        updatedModel(event)
-                                    }
+                                    onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
                                     label="Senha"
                                     type="password"
                                     margin="normal"
@@ -161,4 +143,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default Login

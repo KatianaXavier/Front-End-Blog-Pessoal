@@ -5,8 +5,7 @@ import { Postagem } from '../../../models/Postagem'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAll } from '../../../services/Service'
 import { TokenState } from '../../../store/tokens/tokensReducer';
-import { useDispatch, useSelector } from 'react-redux'
-import { addToken } from '../../../store/tokens/actions'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 function ListaPostagem() {
@@ -22,7 +21,7 @@ function ListaPostagem() {
     useEffect(() => {
         if (token === '') {
             toast.error('É necessário fazer login.', {
-                position: "top-right",
+                position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,

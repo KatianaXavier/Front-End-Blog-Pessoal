@@ -7,6 +7,7 @@ import { getAll } from '../../../services/Service';
 import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
 import { addToken } from '../../../store/tokens/actions';
+import { toast } from 'react-toastify';
 
 function ListaTema() {
 
@@ -34,7 +35,16 @@ function ListaTema() {
 
     useEffect(() => {
         if (token === '') {
-            alert('É necessário estar logado.')
+            toast.error('É necessário fazer login.', {
+                position: "top-center",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
             history('/login')
         }
     }, [token])

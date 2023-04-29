@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { deleteById, getById } from '../../../services/Service';
 import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
+import { toast } from 'react-toastify';
 
 function DeletarTema() {
 
@@ -21,7 +22,16 @@ function DeletarTema() {
 
     useEffect(() => {
         if (token === '') {
-            alert('É necessário fazer login.')
+            toast.error('É necessário fazer login.', {
+                position: "top-center",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
             history('/login')
         }
     }, [])
@@ -46,7 +56,16 @@ function DeletarTema() {
                 Authorization: token
             }
         })
-        alert('Tema deletado com sucesso.')
+        toast.success('Tema deletado com sucesso.', {
+            position: "top-center",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
         history('/temas')
     }
 

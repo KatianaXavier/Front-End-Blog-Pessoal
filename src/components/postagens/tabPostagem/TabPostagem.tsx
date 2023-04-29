@@ -9,7 +9,8 @@ import "./TabPostagem.css";
 import { Carousel } from "../../carrossel/Carrossel";
 
 function TabPostagens() {
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = React.useState('1')
+
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
@@ -35,7 +36,7 @@ function TabPostagens() {
         <Carousel />
       </TabPanel>
     </TabContext>
-  );
+  )
 }
 
-export default TabPostagens;
+export default TabPostagens

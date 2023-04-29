@@ -21,9 +21,9 @@ function Navbar() {
   // função que faz o logout, limpando o token
   function goLogout() {
     dispatch(addToken(''))
-    toast.info('Usuário deslogado!', {
-      position: "top-right",
-      autoClose: 3000,
+    toast.info('Usuário deslogado com sucesso.', {
+      position: "top-center",
+      autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
