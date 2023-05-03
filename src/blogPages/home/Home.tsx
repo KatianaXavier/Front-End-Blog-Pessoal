@@ -88,7 +88,7 @@ function Home() {
         <Grid item xs={6}>
           <img
             className="imagemHome"
-            src="/src/assets/images/imagemHome.svg"
+            src="/src/assets/images/imagemHome.png"
             alt="Mãos sobre o teclado de um laptop, com um caderno e lápis do lado direito e uma planta na parte superior esquerda"
           />
         </Grid>
