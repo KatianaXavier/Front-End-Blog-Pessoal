@@ -47,7 +47,7 @@ function Footer() {
                   align="center"
                   className="texto"
                 >
-                  Feito com 💙 por <a target="_blank" href="https://github.com/Katianaxavier">Katiana Xavier</a>
+                  Feito com 💙 por <a className="linkFooter" target="_blank" href="https://github.com/Katianaxavier">Katiana Xavier</a>
                 </Typography>
               </a>
             </Box>

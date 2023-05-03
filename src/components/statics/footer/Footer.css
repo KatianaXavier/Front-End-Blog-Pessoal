@@ -26,6 +26,10 @@
 
 }
 
-a {
+.linkFooter{
     color: #EDB426;
+}
+
+.linkFooter:hover {
+    color: #0cabf7
 }

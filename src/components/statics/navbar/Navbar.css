@@ -16,6 +16,11 @@
     color: white;
 }
 
+.textosNavbar:hover{
+    color: #EDB426;
+    transition: 0.2s;
+}
+
 .navbar {
     background: #262729;
 }

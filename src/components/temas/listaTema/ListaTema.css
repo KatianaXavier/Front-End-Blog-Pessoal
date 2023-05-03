@@ -1,5 +1,9 @@
 .caixaListaTemas {
     background: #BFC1C0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 auto;
+    width: 80vw;
 }
 
 .cardTema {
@@ -48,4 +52,19 @@
         left: 100%;
         transform: translateX(0%);
     }
+}
+
+.caixaBotaoNovoTema {
+    background: #BFC1C0;
+    display: flex;
+    justify-content: center;
+    min-height: 5vh;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+.botaoCadastrarTema {
+    background:  #edb426!important;
+    color: #262729 !important;
+    font-weight: 700 !important;
 }

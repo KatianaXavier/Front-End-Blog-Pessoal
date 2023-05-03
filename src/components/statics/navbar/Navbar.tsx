@@ -30,7 +30,7 @@ function Navbar() {
       draggable: true,
       progress: undefined,
       theme: "colored",
-      });
+    });
     history('/login')
   }
 
@@ -64,28 +64,21 @@ function Navbar() {
                 </Link>
               </Box>
               <Box mx={1} className="cursor">
-                <Link to='/cadastrarPostagem'>
-                  <Typography variant="h6" className="textosNavbar">
-                    Cadastrar postagem
-                  </Typography>
-                </Link>
-              </Box>
-              <Box mx={1} className="cursor">
                 <Link to='/temas'>
                   <Typography variant="h6" className="textosNavbar">
                     Temas
                   </Typography>
                 </Link>
               </Box>
-              <Box mx={1} className="cursor">
-                <Link to='/cadastrarTema'>
+              <Box mx={1} className='cursor'>
+                <Link to='/perfil'>
                   <Typography variant="h6" className="textosNavbar">
-                    Cadastrar Tema
+                    Perfil
                   </Typography>
                 </Link>
               </Box>
               <Box mx={1} className="cursor" onClick={goLogout}>
-                <Typography variant="h6" color="inherit">
+                <Typography variant="h6" className="textosNavbar">
                   Logout
                 </Typography>
               </Box>

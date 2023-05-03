@@ -1,0 +1,14 @@
+.textoCarrosel {
+    text-align: center !important;
+    align-self: center;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: #0a5276;
+    transition: 0.4s;
+
+}

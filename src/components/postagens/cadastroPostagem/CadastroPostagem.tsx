@@ -1,7 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
     Button,
-    Container,
     Typography,
     TextField,
     FormControl,
@@ -9,6 +8,7 @@ import {
     Select,
     MenuItem,
     FormHelperText,
+    Grid,
 } from '@mui/material';
 import { Postagem } from '../../../models/Postagem';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
 import { User } from '../../../models/User';
 import { toast } from 'react-toastify';
+import './CadastroPostagem.css'
 
 function CadastroPostagem() {
 
@@ -74,20 +75,13 @@ function CadastroPostagem() {
         }
     }, [token])
 
-    useEffect(() => {
+    function updatedPostagem(event: ChangeEvent<HTMLInputElement>) {
         setPostagem({
             ...postagem,
-            tema: tema,
-            usuario: usuario
+            [event.target.name]: event.target.value,
+            tema: tema
         })
-    }, [tema])
-
-    useEffect(() => {
-        getAllTemas()
-        if (id !== undefined) {
-            findByIdPostagem(id)
-        }
-    }, [id])
+    }
 
     async function getAllTemas() {
         await getAll("/temas", setTemas, {
@@ -105,17 +99,20 @@ function CadastroPostagem() {
         })
     }
 
-    function updatedPostagem(event: ChangeEvent<HTMLInputElement>) {
+    useEffect(() => {
+        getAllTemas()
+        if (id !== undefined) {
+            findByIdPostagem(id)
+        }
+    }, [id])
+
+    useEffect(() => {
         setPostagem({
             ...postagem,
-            [event.target.name]: event.target.value,
-            tema: tema
+            tema: tema,
+            usuario: usuario
         })
-    }
-
-    function back() {
-        history('/postagens')
-    }
+    }, [tema])
 
     async function onSubmit(event: ChangeEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -180,22 +177,21 @@ function CadastroPostagem() {
                     theme: "colored",
                 });
             }
-            back()
         }
     }
 
     return (
         <>
-            <Container maxWidth="sm">
-                <form onSubmit={onSubmit} >
-                    <Typography variant="h4" align="center">
-                        {postagem.id == 0 ? "Cadastre" : "Atualize"} sua postagem
+            <Grid container justifyContent={'center'} mt={4}>
+                <form className="cadastroPostagem" onSubmit={onSubmit}>
+                    <Typography marginTop={4} variant="h3" align="center" gutterBottom>
+                        {postagem.id !== 0 ? "Atualizar postagem" : "Cadastrar postagem"}
                     </Typography>
                     <TextField
                         value={postagem.titulo}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => updatedPostagem(event)}
                         id="titulo"
-                        label="Título"
+                        label="Título da postagem"
                         variant="outlined"
                         name="titulo"
                         margin="normal"
@@ -205,35 +201,52 @@ function CadastroPostagem() {
                         value={postagem.texto}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => updatedPostagem(event)}
                         id="texto"
-                        label="Conteúdo da postagem"
+                        error={postagem.texto.length > 700}
+                        label={postagem.texto.length > 700 
+                                ? "A postagem deve ter até 700 caracteres" 
+                                : "Conteúdo da postagem"}
                         name="texto"
                         variant="outlined"
                         multiline
+                        margin="normal"
                         minRows={5}
                         fullWidth
                     />
-                    <FormControl>
+                    <FormControl margin='normal'>
                         <InputLabel>Tema</InputLabel>
+                        <br />
                         <Select
-                            variant="standard"
+                            variant='standard'
                             onChange={(event) => getById(`/temas/${event.target.value}`, setTema, {
                                 headers: {
-                                    'Authorization': token
+                                    Authorization: token
                                 }
-                            })}>
+                            })}
+                        >
                             {
                                 temas.map((tema) => (
-                                    <MenuItem key={tema.id} value={tema.id}>{tema.descricao} <br/></MenuItem> 
+                                    <MenuItem style={{display: 'block'}} value={tema.id}>{tema.descricao}</MenuItem>
                                 ))
                             }
                         </Select>
                         <FormHelperText>Escolha um tema para a postagem</FormHelperText>
                     </FormControl>
-                    <Button type="submit" variant="contained" color="primary" disabled={tema.id === 0}>
-                        {tema.id === 0 ? 'Selecione um tema' : 'Postar'}
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={tema.id === 0 || postagem.texto.length > 700}
+                    >
+                        {tema.id === 0
+                            ? 'Selecione um tema'
+                            : id === undefined
+                            ? 'Postar'
+                            : 'Atualizar postagem'
+                        }
+                        <br />
                     </Button>
                 </form>
-            </Container >
+            </Grid >
         </>
     )
 }

@@ -1,5 +1,5 @@
 .imagemCadastro {
-    background-image: url('../../assets/images/imagemLogin.jpg');
+    background-image: url(https://media4.giphy.com/media/lJNoBCvQYp7nq/giphy.gif?cid=ecf05e47blh3wj6r5b4n37o73clcfnafogjwud1fswtoews0&ep=v1_gifs_search&rid=giphy.gif&ct=g);
     width: 100vh;
     min-height: 100vh;
     background-repeat: no-repeat;
@@ -9,4 +9,18 @@
 
 .botaoCancelar {
     margin-right: 20px;
+}
+
+.caixaCadastro {
+    background-color: #BFC1C0;
+}
+
+.loaderCadastro {
+    width: 30px;
+    height: 43px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 32px 0 #fff, -32px 0 #fff;
+    position: relative;
+    animation: flash 0.5s ease-out infinite alternate;
 }

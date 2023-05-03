@@ -43,13 +43,10 @@ function Perfil() {
                     </Grid>
                     <Grid xs={6} justifyContent={'center'}>
                         <Typography variant='h4' align='center' style={{ paddingBottom: '4vh' }}>Postagens de {usuario.nome}</Typography>
-                        <Typography variant='h6' style={{ paddingBottom: '2vh' }}>Você tem {usuario.postagem?.length} postagens feitas</Typography>
+                        <Typography variant='h6' style={{ paddingBottom: '2vh' }}>Você tem {usuario.postagem?.length} postagens cadastradas.</Typography>
                         {usuario.postagem?.map((post) => (
-                            <Typography style={{ color: 'orange', justifyContent: 'center' }}>{post.titulo}</Typography>
+                            <Typography style={{ color: '#0CABF7', fontWeight:'bold', justifyContent: 'center', paddingBottom: '1vh' }}>{post.titulo}</Typography>
                         ))}
-                        <Box marginTop={2}>
-                            <Button style={{ backgroundColor: 'blueviolet' }} variant='contained'>Atualizar cadastro</Button>
-                        </Box>
                     </Grid>
                 </Grid>
             </Container>

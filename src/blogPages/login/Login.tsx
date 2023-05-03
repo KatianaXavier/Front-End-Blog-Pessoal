@@ -90,7 +90,7 @@ function Login() {
                     <Box display="flex" justifyContent="center">
                         <Grid item xs={6}>
                             <form onSubmit={onSubmit}>
-                                <Typography variant="h3" className="textos" gutterBottom fontWeight='bold'>
+                                <Typography variant="h3" className="textos" gutterBottom>
                                     Entrar
                                 </Typography>
                                 <TextField
@@ -98,7 +98,7 @@ function Login() {
                                     name="usuario"
                                     value={userLogin.usuario}
                                     onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
-                                    label="Usuário"
+                                    label="E-mail"
                                     margin="normal"
                                     fullWidth
                                 />

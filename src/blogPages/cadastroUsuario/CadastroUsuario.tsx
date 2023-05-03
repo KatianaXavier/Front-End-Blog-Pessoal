@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { cadastrarUsuario } from '../../services/Service';
 import { User } from '../../models/User';
 import { toast } from 'react-toastify';
+import UserLogin from '../../models/UserLogin';
 
 function CadastroUsuario() {
 
@@ -32,6 +33,8 @@ function CadastroUsuario() {
 
     const [confirmarSenha, setConfirmarSenha] = useState<String>("")
 
+    const [isLoading, setIsLoading] = useState(false)
+
     function confirmarSenhaHandle(event: ChangeEvent<HTMLInputElement>) {
         setConfirmarSenha(event.target.value)
     }
@@ -47,9 +50,10 @@ function CadastroUsuario() {
         event.preventDefault()
         if (confirmarSenha === user.senha && user.senha.length > 8) {
             try {
+                setIsLoading(true)
                 await cadastrarUsuario('/usuarios/cadastrar', user, setUserResult)
                 toast.success('Usuário cadastrado com sucesso.', {
-                    position: "top-right",
+                    position: "top-center",
                     autoClose: 2500,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -57,11 +61,12 @@ function CadastroUsuario() {
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    });
-                    history('/home')
+                });
+                history('/home')
             } catch (error) {
+                setIsLoading(false)
                 toast.error('Por favor, verifique os campos.', {
-                    position: "top-right",
+                    position: "top-center",
                     autoClose: 2500,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -69,11 +74,11 @@ function CadastroUsuario() {
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    });
+                });
             }
         } else {
-            toast.error('As senhas não coincidem.', {
-                position: "top-right",
+            toast.error('Confira os dados e tente novamente.', {
+                position: "top-center",
                 autoClose: 2500,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -81,7 +86,7 @@ function CadastroUsuario() {
                 draggable: true,
                 progress: undefined,
                 theme: "colored",
-                });
+            });
             setConfirmarSenha('')
             setUser({
                 ...user,
@@ -104,7 +109,7 @@ function CadastroUsuario() {
     }
 
     return (
-        <Grid container direction='row' justifyContent='center' alignItems='center'>
+        <Grid container direction='row' justifyContent='center' alignItems='center' className='caixaCadastro'>
             <Grid item xs={6} className='imagemCadastro'></Grid>
             <Grid item xs={6} justifyContent='center' >
                 <Box display='flex' justifyContent={'center'} >
@@ -116,7 +121,7 @@ function CadastroUsuario() {
                                 name='nome'
                                 value={user.nome}
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
-                                label='Nome completo'
+                                label='Nome'
                                 margin='normal'
                                 fullWidth />
                             <TextField
@@ -124,7 +129,7 @@ function CadastroUsuario() {
                                 name='usuario'
                                 value={user.usuario}
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => updatedModel(event)}
-                                label='Usuário (endereço de e-mail)'
+                                label='E-mail'
                                 margin='normal'
                                 fullWidth />
                             <TextField
@@ -136,6 +141,8 @@ function CadastroUsuario() {
                                 margin='normal'
                                 fullWidth />
                             <TextField
+                                error={user.senha.length < 8 && user.senha.length > 0}
+                                helperText={user.senha.length < 8 && user.senha.length > 0 ? 'A senha deve ter mais de 8 caracteres' : ''}
                                 type='password'
                                 name='senha'
                                 value={user.senha}
@@ -164,14 +171,15 @@ function CadastroUsuario() {
                                         Cancelar
                                     </Button>
                                 </Link>
-                                <Button
+                                <Button className="loaderCadastro"
+                                    disabled={isLoading}
                                     type='submit'
                                     size='large'
                                     variant='contained'
                                     color='primary'
                                     fullWidth
                                 >
-                                    Cadastrar
+                                    {isLoading ? (<span className="loaderCadastro"></span>) : ('Cadastrar')}
                                 </Button>
                             </Box>
                         </form>

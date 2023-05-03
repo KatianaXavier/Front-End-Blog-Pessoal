@@ -1,3 +1,23 @@
+.caixaBotaoNovaPostagem {
+    background: #BFC1C0;
+    display: flex;
+    justify-content: center;
+    min-height: 5vh;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
 .caixaListaPostagens {
     background: #BFC1C0;
+    /* display: grid;
+    grid-template-columns: repeat(3, 1fr); */
+    margin: 0 auto;
+    width: 85vw;
+    /* height: 10vh; */
+}
+
+.botaoCadastrarPostagem {
+    background:  #edb426!important;
+    color: #262729 !important;
+    font-weight: 700 !important;
 }
